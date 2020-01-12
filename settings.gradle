@@ -1,0 +1,5 @@
+rootProject.name = 'multi-store'
+
+include 'inventory'
+include 'wh01'
+include 'wh02'
