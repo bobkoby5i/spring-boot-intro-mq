@@ -18,6 +18,16 @@ repositories {
 	mavenCentral()
 }
 
+task copyJarToDockerPackage(type: Copy, dependsOn: bootJar){
+	from "./build/libs/" // source folder with jar
+	into 'docker/' // your folder with Dockerfile
+	include("inventory-${version}.jar") // name of generated jar
+	rename ("inventory-${version}.jar", "intro-mq-inventory.jar") // change name to same from Dockerfile
+}
+
+build.dependsOn copyJarToDockerPackage // Before task build do this first
+
+
 dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

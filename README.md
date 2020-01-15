@@ -3,15 +3,36 @@
 
 Things to be checked before starting the application:
 
+
+## Option A: inteliJ
 * Start RabbitMQ in docker conteiner.
 * docker run --name name-mq01 --hostname node-mq01 -p 5672:5672 -p 15672:15672 rabbitmq:3.8.2-management 
 * Ensure that you have a rabbitmq server running and correctly configured in application.properties (default is localhost:5672) )
+
+## Option B: docker-compose
+
+* Before you can start services from docker-compose you must build docker images.
+
+### Step 1: build docker images
+* cd U:\projects\intro-mq\
+* docker pull rabbitmq:3.8.2-management
+* docker image build -t intro-mq/wh01 ./wh01
+* docker image build -t intro-mq/inventory ./inventory
+
+### Step 2: Start services
+* docker-compose up rabbitmq
+* docker-compose up wh01
+* docker-compose up inventory
+* http://localhost:8081/swagger-ui.html
+* http://localhost:15672
+
+
 
 
 ## Application flow:
  
 * Swagger -> APP1 -> RabbitMQ -> Inventory -> Terminal 
-* Send request to  http://localhost:8081/api/put_message
+* Send request to  http://localhost:8081/product/inventoryAdjustment/{itemId}
 * A message is put in a rabbitmq queue
 * This message is read and processed by MessageSender class in Inventory
 * Message should arrive at Inventory  

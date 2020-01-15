@@ -1,0 +1,37 @@
+version: '3'
+services:
+  rabbitmq:
+    container_name: intro-mq-rabbitmq-01
+    image: rabbitmq:3.8.2-management
+    hostname: "node-mq01"
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  wh01:
+    build: .
+    container_name: intro-mq-wh01
+    image: intro-mq/wh01:latest
+    depends_on:
+      - rabbitmq
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    environment:
+      ACTIVE_PROFILE: dev1_docker
+
+  inventory:
+    build: .
+    container_name: intro-mq-inventory
+    image: intro-mq/inventory:latest
+    depends_on:
+      - rabbitmq
+    expose:
+      - 8090
+    ports:
+      - 8090:8090
+    environment:
+      ACTIVE_PROFILE: dev1_docker
+
+
