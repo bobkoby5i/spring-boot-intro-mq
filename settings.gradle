@@ -1,5 +1,6 @@
-rootProject.name = 'multi-store'
+rootProject.name = 'multi-store-invenotry'
 
 include 'inventory'
 include 'wh01'
 include 'wh02'
+
